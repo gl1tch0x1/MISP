@@ -426,6 +426,30 @@ show_completion() {
     echo -e "\n${GREEN}Installation completed at: $(date)${NC}"
 }
 
+
+# Start and enable required services
+start_required_services() {
+    print_info "Starting and enabling required services..."
+    # Apache2
+    if systemctl list-unit-files | grep -q '^apache2.service'; then
+        systemctl start apache2 || print_warning "Could not start apache2"
+        systemctl enable apache2 || print_warning "Could not enable apache2"
+        print_status "Apache2 service started and enabled."
+    fi
+    # MySQL
+    if systemctl list-unit-files | grep -q '^mysql.service'; then
+        systemctl start mysql || print_warning "Could not start mysql"
+        systemctl enable mysql || print_warning "Could not enable mysql"
+        print_status "MySQL service started and enabled."
+    fi
+    # MariaDB
+    if systemctl list-unit-files | grep -q '^mariadb.service'; then
+        systemctl start mariadb || print_warning "Could not start mariadb"
+        systemctl enable mariadb || print_warning "Could not enable mariadb"
+        print_status "MariaDB service started and enabled."
+    fi
+}
+
 # Main execution function
 main() {
     # Create log directory
@@ -452,6 +476,7 @@ main() {
     download_misp_installer
     execute_misp_installer
     configure_hosts
+    start_required_services
     verify_installation
     extract_credentials
     
