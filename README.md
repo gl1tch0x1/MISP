@@ -18,7 +18,7 @@ This project provides an automated Bash script to install and configure [MISP](h
    sudo bash misp_config.sh
    ```
 3. **Follow the on-screen instructions.**
-4. **After installation, credentials and access URLs will be provided.**
+4. **After installation, all required services (Apache2, MySQL/MariaDB) will be started and enabled automatically. Credentials and access URLs will be provided.**
 
 ## Output
 - **Credentials:** `/root/misp_credentials.txt`
@@ -28,18 +28,10 @@ This project provides an automated Bash script to install and configure [MISP](h
 
 ```mermaid
 flowchart TD
-    A[Start Script] --> B[Check Root Privileges]
-    B --> C[Check Internet]
-    C --> D[Check System Requirements]
-    D --> E[Install Prerequisites]
-    E --> F[Update System]
-    F --> G[Download MISP Installer]
-    G --> H[Execute MISP Installer]
-    H --> I[Configure Hosts File]
-    I --> J[Verify Installation]
-    J --> K[Extract Credentials]
-    K --> L[Show Completion Message]
-    L --> M[End]
+    A[Start Script] --> B[System & Prerequisite Checks]
+    B --> C[Install & Configure MISP]
+    C --> D[Start Required Services]
+    D --> E[Show Credentials & Completion]
 ```
 
 ## License
